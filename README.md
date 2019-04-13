@@ -19,13 +19,15 @@ you'll get horrible type errors.
 
 ## Example
 ```no_run
-use futures::future::Future;
+use futures::future::{self, Future};
+use future_union::future_union;
+
 fn impl_demo(n: usize) -> impl Future<Item=(), Error=()> {
-   match n {
-       0 => future_union!(3, 0, future::ok(())),
-       1 => future_union!(3, 1, future::ok(()).map(|_| ())),
-       _ => future_union!(3, 2, future::ok(()).map(|_| ()).map(|_| ())),
-   }
+    match n {
+        0 => future_union!(3, 0, future::ok(())),
+        1 => future_union!(3, 1, future::ok(()).map(|_| ())),
+        _ => future_union!(3, 2, future::ok(()).map(|_| ()).map(|_| ())),
+    }
 }
 ```
 
@@ -34,7 +36,9 @@ fn impl_demo(n: usize) -> impl Future<Item=(), Error=()> {
 - implement a function attribute macro that detects `future_union` calls
   in a given function and automatically adds the correct count and index e.g.:
     ```ignore
-    use futures::future::Future;
+    use futures::future::{self, Future};
+    use future_union::*;
+    
     #[future_union_fn]
     fn impl_demo(n: usize) -> impl Future<Item=(), Error=()> {
         match n {

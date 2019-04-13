@@ -7,7 +7,7 @@ use std::iter::FromIterator;
 use quote::quote;
 
 #[proc_macro_hack]
-pub fn future_union(item: TokenStream) -> TokenStream {
+pub fn future_union_impl(item: TokenStream) -> TokenStream {
     let mut iter = item.into_iter();
 
     let count_arg_token = iter.next().unwrap_or_else(|| panic!("Too few arguments"));
@@ -35,11 +35,11 @@ pub fn future_union(item: TokenStream) -> TokenStream {
     let remaining_tokens = proc_macro2::TokenStream::from(TokenStream::from_iter(iter));
 
     TokenStream::from(
-        future_union_impl(count_arg, n_arg, remaining_tokens)
+        future_union_make_tree(count_arg, n_arg, remaining_tokens)
     )
 }
 
-fn future_union_impl(count: u64, n: u64, expr: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+fn future_union_make_tree(count: u64, n: u64, expr: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     assert!(n < count);
 
     if count <= 0 {
@@ -55,10 +55,10 @@ fn future_union_impl(count: u64, n: u64, expr: proc_macro2::TokenStream) -> proc
     } else {
         let max_cap = round_up_to_power_of_2(count);
         if first_half(max_cap, n) {
-            let sub_tree = future_union_impl(max_cap/2, n, expr);
+            let sub_tree = future_union_make_tree(max_cap/2, n, expr);
             quote!( futures::future::Either::A(#sub_tree) )
         } else {
-            let sub_tree = future_union_impl(count-max_cap/2, n-max_cap/2, expr);
+            let sub_tree = future_union_make_tree(count-max_cap/2, n-max_cap/2, expr);
             quote!( futures::future::Either::B(#sub_tree) )
         }
     }
