@@ -6,6 +6,7 @@ edition = "2018"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/djmcgill/future-union"
 description = "Use future::Either with `impl Future`"
+readme = "README.md"
 
 [dependencies]
 proc-macro-hack = "0.5"
