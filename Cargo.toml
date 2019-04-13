@@ -1,0 +1,16 @@
+[package]
+name = "future-union"
+version = "0.1.0"
+authors = ["David McGillicuddy <contact@djmcgill.co.uk>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/djmcgill/future-union"
+
+[dependencies]
+proc-macro-hack = "0.5"
+
+[dependencies.future-union-impl]
+path = "./future-union-impl"
+
+[dev-dependencies]
+futures = "0.1"

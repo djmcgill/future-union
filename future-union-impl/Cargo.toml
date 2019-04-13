@@ -1,0 +1,15 @@
+[package]
+name = "future-union-impl"
+version = "0.1.0"
+authors = ["David McGillicuddy <contact@djmcgill.co.uk>"]
+edition = "2018"
+publish = false
+
+[lib]
+proc-macro = true
+
+[dependencies]
+quote = "0.6"
+syn = "0.15"
+proc-macro2 = "0.4"
+proc-macro-hack = "0.5"
