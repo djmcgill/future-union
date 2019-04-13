@@ -5,6 +5,7 @@ authors = ["David McGillicuddy <contact@djmcgill.co.uk>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/djmcgill/future-union"
+description = "An impl crate for the `future-union` crate. Not intended to be used otherwise."
 
 [lib]
 proc-macro = true
