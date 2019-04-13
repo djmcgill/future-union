@@ -11,6 +11,7 @@ proc-macro-hack = "0.5"
 
 [dependencies.future-union-impl]
 path = "./future-union-impl"
+version = "0.1.0"
 
 [dev-dependencies]
 futures = "0.1"
